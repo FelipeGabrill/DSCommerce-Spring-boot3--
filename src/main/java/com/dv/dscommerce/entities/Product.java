@@ -15,6 +15,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,11 +23,13 @@ import lombok.Setter;
 @Table(name = "tb_product")
 @AllArgsConstructor
 @Getter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Product {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Setter
+	@EqualsAndHashCode.Include
 	private Long id;
 	
 	@Setter

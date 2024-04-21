@@ -17,6 +17,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,11 +25,13 @@ import lombok.Setter;
 @Table(name = "tb_order")
 @AllArgsConstructor
 @Getter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Order {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Setter
+	@EqualsAndHashCode.Include
 	private Long id;
 
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")

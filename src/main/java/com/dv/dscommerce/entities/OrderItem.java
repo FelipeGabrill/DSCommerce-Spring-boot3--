@@ -3,14 +3,17 @@ package com.dv.dscommerce.entities;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Table(name = "tb_order_item")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class OrderItem {
 
 	@EmbeddedId
+	@EqualsAndHashCode.Include
 	private OrderItemPK id = new OrderItemPK();
 	
 	@Getter
