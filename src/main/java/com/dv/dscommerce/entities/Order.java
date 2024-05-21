@@ -38,6 +38,7 @@ public class Order {
 	@Setter
 	private Instant moment;
 
+	@Setter
 	private OrderStatus status;
 
 	@ManyToOne
