@@ -12,12 +12,14 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "tb_category")
 @AllArgsConstructor
 @Getter
+@NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Category {
 	
@@ -32,7 +34,9 @@ public class Category {
 		
 	@ManyToMany(mappedBy = "categories")
 	private Set<Product> products = new HashSet<>();
-	
-	public Category() {
+
+	public Category(Long id, String name) {
+		this.id = id;
+		this.name = name;
 	}
 }
