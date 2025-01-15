@@ -17,11 +17,13 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "tb_product")
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Product {
@@ -54,10 +56,17 @@ public class Product {
 	@OneToMany(mappedBy = "id.product")
 	private Set<OrderItem> items = new HashSet<>();
 	
-	public Product() {
-	}
+	
 	
 	public List<Order> getOrders() {
 		return items.stream().map(x -> x.getOrder()).toList();
+	}
+
+	public Product(Long id, String name, String description, Double price, String imgUrl) {
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.imgUrl = imgUrl;
 	}
 }
