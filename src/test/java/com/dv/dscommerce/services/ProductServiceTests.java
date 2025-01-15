@@ -25,6 +25,8 @@ import com.dv.dscommerce.repositories.ProductRepository;
 import com.dv.dscommerce.services.exceptions.ResourceNotFoundException;
 import com.dv.dscommerce.tests.ProductFactory;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @ExtendWith(SpringExtension.class)
 public class ProductServiceTests {
 
@@ -57,6 +59,10 @@ public class ProductServiceTests {
 		Mockito.when(repository.findById(nonExistingProductId)).thenReturn(Optional.empty());
 		Mockito.when(repository.searchByName(any(), (Pageable)any())).thenReturn(page);
 		Mockito.when(repository.save(any())).thenReturn(product);
+		Mockito.when(repository.getReferenceById(existingProductId)).thenReturn(product);
+		Mockito.when(repository.getReferenceById(nonExistingProductId)).thenThrow(EntityNotFoundException.class);
+
+
 	}
 	
 	@Test
@@ -95,5 +101,24 @@ public class ProductServiceTests {
 		
 		Assertions.assertNotNull(result);
 		Assertions.assertEquals(result.getId(), product.getId());
+		Assertions.assertEquals(result.getName(), product.getName());
+	}
+	
+	@Test
+	public void updateShouldReturnWhenIdExists() {
+		ProductDTO result = service.update(existingProductId, productDTO);
+		
+		Assertions.assertNotNull(result);
+		Assertions.assertEquals(result.getId(), existingProductId);
+		Assertions.assertEquals(result.getName(), productDTO.getName());
+
+	}
+	
+	@Test
+	public void updateShouldReturnResourceNotFoundExceptionWhenIdDoesNotExists() {
+		Assertions.assertThrows(ResourceNotFoundException.class, () -> {
+			service.update(nonExistingProductId, productDTO);
+		});
+
 	}
 }
