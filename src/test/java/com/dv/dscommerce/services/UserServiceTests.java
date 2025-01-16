@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import com.dv.dscommerce.dto.UserDTO;
 import com.dv.dscommerce.entities.User;
 import com.dv.dscommerce.projections.UserDetailsProjection;
 import com.dv.dscommerce.repositories.UserRepository;
@@ -44,7 +45,7 @@ public class UserServiceTests {
 	@BeforeEach
 	void setUp() throws Exception {
 		existingUsername = "maria@gmail.com";
-		existingUsername = "invalid@gmail.com";
+		nonExistingUsername = "invalid@gmail.com";
 		
 		user = UserFactory.createCustomClientUser(1L, existingUsername);
 		userDetails = UserDetailsFactory.createCustomAdminUser(existingUsername);
@@ -53,7 +54,6 @@ public class UserServiceTests {
 		Mockito.when(repository.searchUserAndRolesByEmail(nonExistingUsername)).thenReturn(new ArrayList<>());
 		Mockito.when(repository.findByEmail(existingUsername)).thenReturn(Optional.of(user));
 		Mockito.when(repository.findByEmail(nonExistingUsername)).thenReturn(Optional.empty());
-
 	}
 	
 	@Test
@@ -91,6 +91,30 @@ public class UserServiceTests {
 		
 		Assertions.assertThrows(UsernameNotFoundException.class, () -> {
 			service.authenticated();
+		});
+	}
+	
+	@Test
+	public void getMeShouldReturnUserDTOWhenUserAuthenticated() {
+		
+		//Mockito.doReturn(user).when(service).authenticated();
+		UserService spyUserService = Mockito.spy(service);
+		Mockito.doReturn(user).when(spyUserService).authenticated();
+		
+		UserDTO result = spyUserService.getMe();
+		
+		Assertions.assertNotNull(result);
+		Assertions.assertEquals(result.getEmail(), existingUsername);
+	}
+	
+	@Test
+	public void getMeShouldThrowUsernameNotFoundExceptionWhenUserNotAuthenticated() {
+		
+		UserService spyUserService = Mockito.spy(service);
+		Mockito.doThrow(UsernameNotFoundException.class).when(spyUserService).authenticated();
+		
+		Assertions.assertThrows(UsernameNotFoundException.class, () -> {
+			spyUserService.getMe();
 		});
 	}
 }
