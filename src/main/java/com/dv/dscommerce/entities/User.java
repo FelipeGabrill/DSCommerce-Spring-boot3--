@@ -75,6 +75,15 @@ public class User implements UserDetails{
 		this.orders = orders;
 	}
 
+	public User(Long id, String name, String email, String phone, LocalDate birthDate, String password) {
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.phone = phone;
+		this.birthDate = birthDate;
+		this.password = password;
+	}
+
 	public void addRole(Role role) {
 		roles.add(role);
 	}
