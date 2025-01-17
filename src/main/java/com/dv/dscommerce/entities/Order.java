@@ -59,4 +59,12 @@ public class Order {
 	public List<Product> getProducts() {
 		return items.stream().map(x -> x.getProduct()).toList();
 	}
+
+	public Order(Long id, Instant moment, OrderStatus status, User client, Payment payment) {
+		this.id = id;
+		this.moment = moment;
+		this.status = status;
+		this.client = client;
+		this.payment = payment;
+	}
 }
