@@ -2,7 +2,6 @@ package com.dv.dscommerce.tests;
 
 import java.time.LocalDate;
 
-import com.dv.dscommerce.dto.UserDTO;
 import com.dv.dscommerce.entities.Role;
 import com.dv.dscommerce.entities.User;
 
