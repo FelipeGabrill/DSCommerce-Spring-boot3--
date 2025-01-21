@@ -90,6 +90,8 @@
 						<exclude>com/dv/dscommerce/dto/**</exclude>
 						<exclude>com/dv/dscommerce/controllers/handlers/**</exclude>
 						<exclude>com/dv/dscommerce/services/exceptions/**</exclude>
+						<exclude>com/dv/dscommerce/util/**</exclude>
+						<exclude>com/dv/dscommerce/controllers/**</exclude>
 					</excludes>
 				</configuration>
 				<executions>
