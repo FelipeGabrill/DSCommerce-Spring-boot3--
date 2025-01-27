@@ -13,9 +13,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dv.dscommerce.dto.ProductDTO;
+import com.dv.dscommerce.entities.Category;
 import com.dv.dscommerce.entities.Product;
 import com.dv.dscommerce.tests.TokenUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -55,6 +57,12 @@ public class ProductControllerIT {
 		adminToken = tokenUtil.obtainAccessToken(mockMvc, adminUsername, adminPassword);
 		clientToken = tokenUtil.obtainAccessToken(mockMvc, clientUsername, clientPassword);
 		invalidToken = adminToken + "xpto"; 
+		
+		Category category = new Category(2L, "Eletronico");
+		product = new Product(null, "PS5", "Descrição para o produto", 3999.90, "https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/1-big.jpg");
+		product.getCategories().add(category);
+		
+		productDTO = new ProductDTO(product);
 	}
 
 	@Test
@@ -88,7 +96,16 @@ public class ProductControllerIT {
 		ResultActions result = mockMvc.perform(post("/products")
 				.header("Authorization", "Bearer " + adminToken)
 				.content(jsonBody)
-				.accept(MediaType.APPLICATION_JSON));
-
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON))
+				.andDo(MockMvcResultHandlers.print());
+		
+		result.andExpect(status().isCreated());
+		result.andExpect(jsonPath("$.id").value(26L));
+		result.andExpect(jsonPath("$.name").value("PS5"));
+		result.andExpect(jsonPath("$.description").value("Descrição para o produto"));
+		result.andExpect(jsonPath("$.price").value(3999.90));
+		result.andExpect(jsonPath("$.imgUrl").value("https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/1-big.jpg"));
+		result.andExpect(jsonPath("$.categories[0].id").value(2L));
 	}
 }
