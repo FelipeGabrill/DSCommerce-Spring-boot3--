@@ -1,5 +1,16 @@
 # DSCommerce
 
+## Tecnologias Utilizadas
+
+- Java 17
+- Spring Boot 3.2.5
+- Spring Security
+- JWT
+- Spring Data JPA
+- H2 Database
+- bcrypt
+- Maven
+
 ## 1. Visão Geral do Sistema
 
 O sistema permite o gerenciamento de usuários, produtos e categorias. As principais funcionalidades incluem:
