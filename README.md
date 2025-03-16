@@ -10,6 +10,8 @@
 - H2 Database
 - bcrypt
 - Maven
+- JUnit
+- JaCoCo
 
 ## 1. Visão Geral do Sistema
 
@@ -133,3 +135,34 @@ O sistema permite o gerenciamento de usuários, produtos e categorias. As princi
 #### **Fluxo principal:**
 1. O cliente confirma os itens do carrinho.
 2. O sistema registra o pedido e gera um número de identificação.
+
+## 6. Testes Unitários e Cobertura de Código
+
+### Testes Implementados
+
+O sistema conta com uma série de testes unitários e de integração para garantir o correto funcionamento de suas funcionalidades. Abaixo estão as classes dos testes:
+
+- **OrderControllerIT**: Testes de integração para a camada de controle de pedidos.
+- **ProductControllerIT**: Testes de integração para a camada de controle de produtos.
+- **AuthServiceTests**: Testes unitários para o serviço de autenticação.
+- **CategoryServiceTests**: Testes unitários para o serviço de categorias.
+- **OrderServiceTests**: Testes unitários para o serviço de pedidos.
+- **ProductServiceTests**: Testes unitários para o serviço de produtos.
+- **UserServiceTests**: Testes unitários para o serviço de usuários.
+
+### Cobertura de Código
+
+A cobertura de código é monitorada utilizando o **JaCoCo**, garantindo que as funcionalidades críticas do sistema estejam devidamente testadas.
+Para gerar o relatório de cobertura, basta rodar o comando Maven:
+
+```bash
+mvn clean install
+```
+
+Acesse a pasta:
+
+```bash
+target/jacoco-report/index.html
+```
+
+
